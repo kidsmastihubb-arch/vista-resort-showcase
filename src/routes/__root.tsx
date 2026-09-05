@@ -77,21 +77,66 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Vista Resort Manali – Centrally Heated & Air Cooled Hotel" },
+      {
+        name: "description",
+        content:
+          "Vista Resort, Bhajogi Siyal Manali — a budget-friendly 3-star centrally heated hotel around 500m from Mall Road. Rated 3.8/5 by 300+ guests.",
+      },
+      { property: "og:site_name", content: "Vista Resort Manali" },
       { property: "og:type", content: "website" },
+      { property: "og:locale", content: "en_IN" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "theme-color", content: "#1f3a2c" },
     ],
     links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: appCss,
+        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Karla:wght@400;500;600;700&display=swap",
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Hotel",
+          name: "Vista Resort - Centrally Heated & Air Cooled",
+          description:
+            "Budget-friendly 3-star centrally heated and air cooled hotel in Siyal, Bhajogi, Manali, around 500m from Mall Road.",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "Bhajogi, Siyal",
+            addressLocality: "Manali",
+            addressRegion: "Himachal Pradesh",
+            postalCode: "175131",
+            addressCountry: "IN",
+          },
+          geo: { "@type": "GeoCoordinates", latitude: 32.2457324, longitude: 77.1822327 },
+          telephone: "+91 78079 18018",
+          starRating: { "@type": "Rating", ratingValue: "3" },
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: "3.8",
+            reviewCount: "300",
+          },
+          amenityFeature: [
+            "Central Heating",
+            "Air Cooling",
+            "Free Wi-Fi",
+            "Complimentary Parking",
+            "Lift",
+            "Daily Housekeeping",
+            "Laundry Service",
+            "Rooftop Area",
+            "Evening Bonfire",
+          ].map((name) => ({ "@type": "LocationFeatureSpecification", name, value: true })),
+        }),
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -119,8 +164,14 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <Navbar />
+      <main className="pb-16 sm:pb-0">
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+      </main>
+      <Footer />
+      <WhatsAppFloat />
     </QueryClientProvider>
   );
 }
+
